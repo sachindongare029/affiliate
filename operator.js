@@ -1,0 +1,35 @@
+module.exports = [
+    {
+        "countryname":"India",
+        "operator":[
+            {
+                "operatorname":"AIRTEL,IDEA,DOCOMO,BSNL"
+            }
+                    ]
+    },
+    {
+        "countryname":"Australia",
+        "operator":[
+            {
+                "operatorname":"DSL,OPTUS,TELSTRA"
+            }
+        ]
+    },
+    {
+        "countryname":"UK",
+        "operator":[
+            {
+                "operatorname":"EE,O2,T-MOBILE"
+            }
+        ]
+    },
+    {
+        "countryname":"UAE",
+        "operator":[
+            {
+                "operatorname":"DU,ESTISALAT"
+            }
+        ]
+    }
+   
+]

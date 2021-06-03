@@ -1,0 +1,328 @@
+ // var userid = req.body.userid;
+            // User1.findOneAndUpdate({userid:userid},function(err,data){
+
+            //   if(err){
+            //         console.log(err);
+            //         res.status(400).send();
+            //   }else{
+            //     if(!data){
+            //       res.status(400).send();
+            //     }else{
+            //       if(req.body.firstname){
+            //         data.firstname=req.body.firstname;
+            //       }
+            //       if(req.body.lastname){
+            //         data.lastname=req.body.lastname;
+            //       }
+            //       if(req.body.userid){
+            //         data.userid=req.body.userid;
+            //       }
+            //       if(req.body.email){
+            //         data.email=req.body.email;
+            //       }
+            //       if(req.body.publisher){
+            //         data.publisher=req.body.publisher;
+            //       }
+            //       if(req.body.advertiser){
+            //         data.advertiser=req.body.advertiser;
+            //       }
+
+            //       data.save(function(err,updatedObject){
+
+            //         if(err){
+            //           console.log(err);
+            //           res.status(400).send();
+            //         }else{
+            //           res.send(updatedObject);
+            //         }
+            //       });
+            //     }
+            //   }
+
+            // });
+
+{
+    "userid": "123"
+    "token": "xyz",
+    "user":{
+        "id":"234",
+        "firstname": "aaab"
+        }
+}
+
+const update = {
+              "$set": {
+                      
+                      "userid":user.userid,
+                      
+                      "status":user.status,
+                      
+                      }
+              };
+              const options = { "upsert": false };
+              User1.updateOne({userid:user.userid}, update, options)
+              .then(result => {
+
+
+                   const query = { "userid": userid };
+        const update = {
+        "$set": {
+                "token": null,
+                }
+        };
+        const options = { "upsert": false };
+        User1.updateOne(query, update, options)
+        .then(result => {
+
+
+              
+            try{
+              let {pageno,records} = req.query;
+      
+            if(!pageno){
+              pageno=1;
+            }
+            if(!records){
+              records=20;
+            }
+            const limit = parseInt(records);
+      
+            const offset=(pageno - 1)*records;
+      
+      
+            User1.find({},{firstname:1, lastname:1, userid:1, email:1, status:1, role:1, publisher:1, advertiser:1,}).limit(limit).skip(offset)
+              .then((data)=>{
+                if(data){
+                  
+                  console.log("Show Record Successfully...")
+                  res.status(200).json({
+                    status: "Success",
+                    message: "User ID & Token is match And Display User List",
+                    pageno,
+                    records,
+                    Users:data
+                  });
+                }else{
+                  res.status(400).json({
+            
+                    status: "FAILED",
+                    message: "Invalid Data",
+                  });
+                }
+              })
+      
+          }catch(err){
+            res.status(400).send(err.message);
+          }
+
+
+//Logout code
+
+
+    //   let { userid, tokenapi } = req.body;
+    //  //Check null or not
+    //   if (userid == "" || tokenapi == "") {
+    //     res.json({
+    //       status: "FAILED",
+    //       message: "Empty data",
+    //     });
+        
+    //   }else {
+    //     //token verification 
+
+    //     var verified = jwt.verify(tokenapi,'secret');
+    //     console.log("Verified Token:"+JSON.stringify(verified));
+    //    }
+    //   // Check if user exist
+    //    User1.find({userid},{token:1})
+    //    .then((data) =>{
+    //      if(data){
+
+    //       //compare Token 
+    //       const dbtoken = data[0].token;
+
+    //       var buf1 = Buffer.from(dbtoken);
+    //       var buf2 = Buffer.from(tokenapi);
+    //       var x = Buffer.compare(buf1, buf2);
+
+    //         if(!x){
+              
+    //            console.log("Error")
+              
+    //         }else{
+    //           console.log("Compare Token Successfully...")
+    //           res.status(200).json({
+    //             status: "Success",
+    //             message: "Token Remove successful"
+    //           });
+           let {userid} = req.body;
+        const query = { "userid": userid };
+        const update = {
+        "$set": {
+                "token": null,
+                }
+        };
+        const options = { "upsert": false };
+        User1.updateOne(query, update, options)
+
+         //       }
+      //    }else {
+      //     res.status(400).json({
+      //       status: "FAILED",
+      //       message: "Invalid userid/token",
+      //     });
+      //   }
+      // }).catch((err) => {
+      //   res.status(400).json({
+      //     status: "FAILED",
+      //     message: "Invalid userid/password",
+      //   });
+      // }); 
+
+
+      //UserList api
+
+      // const express = require("express");
+// const router = express.Router();
+// //mongodb user model
+// const User1 = require('./../models/User');
+// const bcrypt = require('bcrypt');
+// const jwt = require('jsonwebtoken');
+
+
+// router.post('/userList',function(req,res) {
+
+//     //check userid & token verify
+//     let { userid, tokenapi } = req.body;
+     
+//       if (userid == "" || tokenapi == "") {
+//         res.json({
+//           status: "FAILED",
+//           message: "Empty data",
+//         });
+        
+//       }else {
+//         var verified = jwt.verify(tokenapi,'secret');
+//         console.log("Verified Token:"+JSON.stringify(verified));
+//        }
+//        User1.find({userid},{token:1})
+//        .then((data) =>{
+//          if(data){
+
+//           const dbtoken = data[0].token;
+
+//           var buf1 = Buffer.from(dbtoken);
+//           var buf2 = Buffer.from(tokenapi);
+//           var x = Buffer.compare(buf1, buf2);
+
+//             if(x){
+              
+//                console.log("Error")
+           
+            
+//           }else{
+//             console.log("Compare Token Successfully...")
+          
+//             try{
+//               let {pageno,records} = req.query;
+      
+//             if(!pageno){
+//               pageno=1;
+//             }
+//             if(!records){
+//               records=20;
+//             }
+//             const limit = parseInt(records);
+      
+//             const offset=(pageno - 1)*records;
+      
+      
+//             User1.find({},{firstname:1, lastname:1, userid:1, email:1, status:1, role:1, publisher:1, advertiser:1,}).limit(limit).skip(offset)
+//               .then((data)=>{
+//                 if(data){
+                  
+//                   console.log("Show Record Successfully...")
+//                   res.status(200).json({
+//                     status: "Success",
+//                     message: "User ID & Token is match And Display User List",
+//                     pageno,
+//                     records,
+//                     Users:data
+//                   });
+//                 }else{
+//                   res.status(400).json({
+            
+//                     status: "FAILED",
+//                     message: "Invalid Data",
+//                   });
+//                 }
+//               })
+      
+//           }catch(err){
+//             res.status(400).send(err.message);
+//           }
+            
+//           }
+//         }
+//         });
+//   });
+
+
+
+
+// module.exports = router;
+
+
+const country = require('../country');
+
+console.log(country);
+
+//get apis
+
+router.get('/countries',function(req,res){
+
+    let countries = country.map(v => v.name);
+    console.log(countries);
+
+});
+
+router.get('/operators',function(req,res){
+
+    let operators = operator.map(v => v.operator);
+    console.log(operators);
+
+});
+
+
+//Edibidrate 
+
+//   const update = {
+    //   "$set": {
+    //           // "campaignname":campaignpublisher.campaignname,
+    //           // "publishername": campaignpublisher.publishername,
+    //           "bidrate":campaignpublisher.bidrate
+    //           }
+    //   };
+    //   const options = { "upsert": false }
+    // //  console.log(user);
+    //   CampaignPublisher.updateOne({"publishername":campaignpublisher.publishername,"campaignname":campaignpublisher.campaignname}, update, options)
+    //   .then(result => {
+    //     if(result) {
+    //     res.status(200).json({
+    //       status: "Success",
+    //       message: "User Data Successfully Updated..",
+    //     }); 
+    //     }
+    //     else {
+    //       res.status(400).json({
+    //         status: "FAILED",
+    //         message: "Failed Data Updation..!",
+    //       });
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     res.status(400).json({
+    //       status: "FAILED",
+    //       message: "Failed Data Updation..!",
+    //     });
+    //   }); 
